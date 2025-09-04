@@ -1,0 +1,154 @@
+{
+  "tests": [
+    {
+      "name": "Test 1 - Calcular tasa mensual",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testCalcularTasaMensual",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    },
+    {
+      "name": "Test 2 - Calcular cuota mensual con tasa",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testCalcularCuotaMensualConTasa",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7
+    },
+    {
+      "name": "Test 3 - Calcular cuota mensual sin tasa",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testCalcularCuotaMensualSinTasa",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    },
+    {
+      "name": "Test 4 - Rechazo perfil bajo",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testRechazoPerfilBajo",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7
+    },
+    {
+      "name": "Test 5 - Aprobación perfil alto",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testAprobacionPerfilAlto",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7
+    },
+    {
+      "name": "Test 6 - Rechazo perfil alto por cuota",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testRechazoPerfilAltoPorCuota",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7
+    },
+    {
+      "name": "Test 7 - Rechazo perfil medio sin codeudor",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testRechazoPerfilMedioSinCodedor",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7
+    },
+    {
+      "name": "Test 8 - Aprobación perfil medio con codeudor",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testAprobacionPerfilMedioConCodedor",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7
+    },
+    {
+      "name": "Test 9 - Rechazo perfil medio con codeudor por cuota",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testRechazoPerfilMedioConCodedorPorCuota",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7
+    },
+    {
+      "name": "Test 10 - Puntaje límite 500",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testPuntajeLimite500",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    },
+    {
+      "name": "Test 11 - Puntaje límite 700",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testPuntajeLimite700",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    },
+    {
+      "name": "Test 12 - Perfil alto con múltiples créditos",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testPerfilAltoConMuchosCreditosActivos",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7
+    },
+    {
+      "name": "Test 13 - Getters y Setters",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testGettersSetters",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    },
+    {
+      "name": "Test 14 - Cuota con valores grandes",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testCuotaValoresGrandes",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    },
+    {
+      "name": "Test 15 - Valores mínimos",
+      "setup": "",
+      "run": "mvn test -Dtest=EvaluacionCreditoTest#testValoresMinimos",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    }
+  ]
+}

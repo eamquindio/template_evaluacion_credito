@@ -1,0 +1,121 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Test Calcular Promedio
+      id: test-calcular-promedio
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Calcular Promedio
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testCalcularPromedio
+        timeout: 10
+        max-score: 10
+    - name: Test Calcular Promedio con Notas Bajas
+      id: test-calcular-promedio-con-notas-bajas
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Calcular Promedio con Notas Bajas
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testCalcularPromedioConNotasBajas
+        timeout: 10
+        max-score: 10
+    - name: Test Obtener Mejor Nota
+      id: test-obtener-mejor-nota
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Obtener Mejor Nota
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testObtenerMejorNota
+        timeout: 10
+        max-score: 10
+    - name: Test Obtener Mejor Nota - Primera es Mayor
+      id: test-obtener-mejor-nota-primera-es-mayor
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Obtener Mejor Nota - Primera es Mayor
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testObtenerMejorNotaCuandoPrimeraEsMayor
+        timeout: 10
+        max-score: 10
+    - name: Test Obtener Mejor Nota - Segunda es Mayor
+      id: test-obtener-mejor-nota-segunda-es-mayor
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Obtener Mejor Nota - Segunda es Mayor
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testObtenerMejorNotaCuandoSegundaEsMayor
+        timeout: 10
+        max-score: 10
+    - name: Test Ganó el Curso
+      id: test-gano-el-curso
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Ganó el Curso
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testGanoElCurso
+        timeout: 10
+        max-score: 10
+    - name: Test Perdió el Curso
+      id: test-perdio-el-curso
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Perdió el Curso
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testPerdioElCurso
+        timeout: 10
+        max-score: 10
+    - name: Test Ganó el Curso con Promedio Exacto
+      id: test-gano-el-curso-con-promedio-exacto
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Ganó el Curso con Promedio Exacto
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testGanoElCursoConPromedioExacto
+        timeout: 10
+        max-score: 10
+    - name: Test Getters y Setters
+      id: test-getters-y-setters
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Getters y Setters
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testGettersYSetters
+        timeout: 10
+        max-score: 10
+    - name: Test Constructor
+      id: test-constructor
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Constructor
+        setup-command: ''
+        command: mvn test -Dtest=EstudianteTest#testConstructor
+        timeout: 10
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST-CALCULAR-PROMEDIO_RESULTS: "${{steps.test-calcular-promedio.outputs.result}}"
+        TEST-CALCULAR-PROMEDIO-CON-NOTAS-BAJAS_RESULTS: "${{steps.test-calcular-promedio-con-notas-bajas.outputs.result}}"
+        TEST-OBTENER-MEJOR-NOTA_RESULTS: "${{steps.test-obtener-mejor-nota.outputs.result}}"
+        TEST-OBTENER-MEJOR-NOTA-PRIMERA-ES-MAYOR_RESULTS: "${{steps.test-obtener-mejor-nota-primera-es-mayor.outputs.result}}"
+        TEST-OBTENER-MEJOR-NOTA-SEGUNDA-ES-MAYOR_RESULTS: "${{steps.test-obtener-mejor-nota-segunda-es-mayor.outputs.result}}"
+        TEST-GANO-EL-CURSO_RESULTS: "${{steps.test-gano-el-curso.outputs.result}}"
+        TEST-PERDIO-EL-CURSO_RESULTS: "${{steps.test-perdio-el-curso.outputs.result}}"
+        TEST-GANO-EL-CURSO-CON-PROMEDIO-EXACTO_RESULTS: "${{steps.test-gano-el-curso-con-promedio-exacto.outputs.result}}"
+        TEST-GETTERS-Y-SETTERS_RESULTS: "${{steps.test-getters-y-setters.outputs.result}}"
+        TEST-CONSTRUCTOR_RESULTS: "${{steps.test-constructor.outputs.result}}"
+      with:
+        runners: test-calcular-promedio,test-calcular-promedio-con-notas-bajas,test-obtener-mejor-nota,test-obtener-mejor-nota-primera-es-mayor,test-obtener-mejor-nota-segunda-es-mayor,test-gano-el-curso,test-perdio-el-curso,test-gano-el-curso-con-promedio-exacto,test-getters-y-setters,test-constructor
