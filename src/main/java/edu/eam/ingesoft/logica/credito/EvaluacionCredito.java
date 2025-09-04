@@ -6,14 +6,12 @@ package edu.eam.ingesoft.logica.credito;
  */
 public class EvaluacionCredito {
     
-    // TODO: Declarar los atributos necesarios para la evaluación de crédito
-    // Según el contexto de negocio, necesitas:
-    // - Nombre del solicitante (String)
-    // - Ingresos mensuales (double)
-    // - Número de créditos activos (int)
-    // - Puntaje de crédito (int, rango 0-1000)
-    // - Valor del crédito solicitado (double)
-    // - Tiene codeudor (boolean)
+    private String nombreSolicitante;
+    private double ingresosMensuales;
+    private int numeroCreditosActivos;
+    private int puntajeCredito;
+    private double valorCreditoSolicitado;
+    private boolean tieneCodedor;
     
     /**
      * Constructor de la clase EvaluacionCredito.
@@ -28,7 +26,12 @@ public class EvaluacionCredito {
     public EvaluacionCredito(String nombreSolicitante, double ingresosMensuales, 
                             int numeroCreditosActivos, int puntajeCredito, 
                             double valorCreditoSolicitado, boolean tieneCodedor) {
-        // TODO: Inicializar los atributos con los parámetros recibidos
+        this.nombreSolicitante = nombreSolicitante;
+        this.ingresosMensuales = ingresosMensuales;
+        this.numeroCreditosActivos = numeroCreditosActivos;
+        this.puntajeCredito = puntajeCredito;
+        this.valorCreditoSolicitado = valorCreditoSolicitado;
+        this.tieneCodedor = tieneCodedor;
     }
     
     /**
@@ -38,9 +41,7 @@ public class EvaluacionCredito {
      * @return Tasa mensual en porcentaje
      */
     public double calcularTasaMensual(double tasaNominalAnual) {
-        // TODO: Implementar el cálculo de la tasa mensual
-        // Fórmula: TNA / 12
-        return 0; // Cambiar por la implementación correcta
+        return tasaNominalAnual / 12.0;
     }
     
     /**
@@ -52,13 +53,16 @@ public class EvaluacionCredito {
      * @return Valor de la cuota mensual en pesos
      */
     public double calcularCuotaMensual(double tasaNominalAnual, int plazoMeses) {
-        // TODO: Implementar el cálculo de la cuota mensual
-        // Recuerda:
-        // - Usar calcularTasaMensual() para obtener la tasa mensual
-        // - Convertir la tasa a decimal dividiendo entre 100
-        // - Caso especial: si la tasa es 0, la cuota = monto / plazo
-        // - Usar Math.pow() para las potencias
-        return 0; // Cambiar por la implementación correcta
+        double tasaMensual = calcularTasaMensual(tasaNominalAnual) / 100.0;
+        
+        if (tasaMensual == 0) {
+            return valorCreditoSolicitado / plazoMeses;
+        }
+        
+        double numerador = valorCreditoSolicitado * tasaMensual * Math.pow(1 + tasaMensual, plazoMeses);
+        double denominador = Math.pow(1 + tasaMensual, plazoMeses) - 1;
+        
+        return numerador / denominador;
     }
     
     /**
@@ -72,24 +76,34 @@ public class EvaluacionCredito {
      * @return true si el crédito es aprobado, false si es rechazado
      */
     public boolean evaluarAprobacion(double tasaNominalAnual, int plazoMeses) {
-        // TODO: Implementar la lógica de evaluación
-        // Pasos recomendados:
-        // 1. Calcular la cuota mensual usando calcularCuotaMensual()
-        // 2. Determinar el perfil según el puntaje de crédito
-        // 3. Aplicar las reglas correspondientes a cada perfil
-        // 4. Calcular el porcentaje de la cuota respecto a los ingresos
-        return false; // Cambiar por la implementación correcta
+        double cuotaMensual = calcularCuotaMensual(tasaNominalAnual, plazoMeses);
+        
+        if (puntajeCredito < 500) {
+            return false;
+        }
+        
+        if (puntajeCredito > 700 && numeroCreditosActivos < 2) {
+            double porcentajeIngresos = (cuotaMensual / ingresosMensuales) * 100;
+            return porcentajeIngresos <= 30;
+        }
+        
+        if (puntajeCredito >= 500 && puntajeCredito <= 700) {
+            if (!tieneCodedor) {
+                return false;
+            }
+            double porcentajeIngresos = (cuotaMensual / ingresosMensuales) * 100;
+            return porcentajeIngresos <= 25;
+        }
+        
+        return false;
     }
-    
-    // TODO: Implementar todos los getters y setters
-    // Necesitas métodos get/set para todos los atributos:
     
     /**
      * Obtiene el nombre del solicitante.
      * @return Nombre completo del solicitante
      */
     public String getNombreSolicitante() {
-        return null; // TODO: Implementar
+        return nombreSolicitante;
     }
     
     /**
@@ -97,53 +111,87 @@ public class EvaluacionCredito {
      * @param nombreSolicitante Nombre completo del solicitante
      */
     public void setNombreSolicitante(String nombreSolicitante) {
-        // TODO: Implementar
+        this.nombreSolicitante = nombreSolicitante;
     }
     
-    // TODO: Continúa implementando los demás getters y setters...
-    // getIngresosMensuales() / setIngresosMensuales()
-    // getNumeroCreditosActivos() / setNumeroCreditosActivos()
-    // getPuntajeCredito() / setPuntajeCredito()
-    // getValorCreditoSolicitado() / setValorCreditoSolicitado()
-    // isTieneCodedor() / setTieneCodedor()
+    /**
+     * Obtiene los ingresos mensuales del solicitante.
+     * @return Ingresos mensuales en pesos
+     */
     
     public double getIngresosMensuales() {
-        return 0; // TODO: Implementar
+        return ingresosMensuales;
     }
     
+    /**
+     * Establece los ingresos mensuales del solicitante.
+     * @param ingresosMensuales Ingresos mensuales en pesos
+     */
     public void setIngresosMensuales(double ingresosMensuales) {
-        // TODO: Implementar
+        this.ingresosMensuales = ingresosMensuales;
     }
     
+    /**
+     * Obtiene el número de créditos activos del solicitante.
+     * @return Cantidad de créditos activos
+     */
     public int getNumeroCreditosActivos() {
-        return 0; // TODO: Implementar
+        return numeroCreditosActivos;
     }
     
+    /**
+     * Establece el número de créditos activos del solicitante.
+     * @param numeroCreditosActivos Cantidad de créditos activos
+     */
     public void setNumeroCreditosActivos(int numeroCreditosActivos) {
-        // TODO: Implementar
+        this.numeroCreditosActivos = numeroCreditosActivos;
     }
     
+    /**
+     * Obtiene el puntaje de crédito del solicitante.
+     * @return Puntaje crediticio (0-1000)
+     */
     public int getPuntajeCredito() {
-        return 0; // TODO: Implementar
+        return puntajeCredito;
     }
     
+    /**
+     * Establece el puntaje de crédito del solicitante.
+     * @param puntajeCredito Puntaje crediticio (0-1000)
+     */
     public void setPuntajeCredito(int puntajeCredito) {
-        // TODO: Implementar
+        this.puntajeCredito = puntajeCredito;
     }
     
+    /**
+     * Obtiene el valor del crédito solicitado.
+     * @return Monto del crédito en pesos
+     */
     public double getValorCreditoSolicitado() {
-        return 0; // TODO: Implementar
+        return valorCreditoSolicitado;
     }
     
+    /**
+     * Establece el valor del crédito solicitado.
+     * @param valorCreditoSolicitado Monto del crédito en pesos
+     */
     public void setValorCreditoSolicitado(double valorCreditoSolicitado) {
-        // TODO: Implementar
+        this.valorCreditoSolicitado = valorCreditoSolicitado;
     }
     
+    /**
+     * Verifica si el solicitante tiene codeudor.
+     * @return true si tiene codeudor, false en caso contrario
+     */
     public boolean isTieneCodedor() {
-        return false; // TODO: Implementar
+        return tieneCodedor;
     }
     
+    /**
+     * Establece si el solicitante tiene codeudor.
+     * @param tieneCodedor true si tiene codeudor, false en caso contrario
+     */
     public void setTieneCodedor(boolean tieneCodedor) {
-        // TODO: Implementar
+        this.tieneCodedor = tieneCodedor;
     }
 }
